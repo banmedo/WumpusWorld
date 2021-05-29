@@ -3,4 +3,4 @@ __pycache__
 .vscode
 wumpy
 .DS_Store
-log.log
+*.log

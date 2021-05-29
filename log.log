@@ -1,12 +1,66 @@
-INFO:root:start - [True, True, False, True, False, False, False] 
-|    |   P|    |    |
-| W  |    |    |   P|
-|   P|    |    |    |
-|>   |    |   P|  G |
+INFO:root:start - {'game_on': True, 'alive': True, 'stench': True, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|>   |    |   P|   P|
 
-INFO:root:climb - [False, True, False, True, False, False, False, -1] 
-|    |   P|    |    |
-| W  |    |    |   P|
-|   P|    |    |    |
-|>   |    |   P|  G |
+INFO:root:shoot - {'game_on': True, 'alive': True, 'stench': True, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|>   |    |   P|   P|
+
+INFO:root:forward - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |>   |   P|   P|
+
+INFO:root:turn_left - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |^   |   P|   P|
+
+INFO:root:turn_right - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |>   |   P|   P|
+
+INFO:root:grab - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |>   |   P|   P|
+
+INFO:root:grab - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |>   |   P|   P|
+
+INFO:root:turn_right - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |v   |   P|   P|
+
+INFO:root:grab - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |v   |   P|   P|
+
+INFO:root:forward - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': True, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |v   |   P|   P|
+
+INFO:root:turn_right - {'game_on': True, 'alive': True, 'stench': False, 'breeze': True, 'glitter': False, 'bump': False, 'screech': False} 
+|    |    |   P|    |
+|    |    |    |    |
+| W P|    |    |  GP|
+|    |<   |   P|   P|
 
