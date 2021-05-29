@@ -1,6 +1,6 @@
 import random
 from src.percepts import Percepts
-from src.config import POINTS
+from src.config import GAME_SETTINGS, POINTS
 
 from numpy.core.fromnumeric import size
 from src.wumpus import Wumpus
@@ -21,7 +21,13 @@ class Environment:
 
     __MOVEMOD = {"N":(0, 1), "E":(1, 0), "S":(0, -1), "W":(-1, 0)}
 
-    def __init__(self, size_x=4, size_y=4, allow_climb=True, pit_prob=0.2):
+    def __init__(
+        self, 
+        size_x=GAME_SETTINGS.SIZE_X, 
+        size_y=GAME_SETTINGS.SIZE_Y, 
+        allow_climb=GAME_SETTINGS.CLIMB_EMPTY, 
+        pit_prob=GAME_SETTINGS.PIT_PROB
+    ):
         self.size_x = size_x
         self.size_y = size_y
         self.pit_prob = pit_prob

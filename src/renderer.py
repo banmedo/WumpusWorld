@@ -8,8 +8,8 @@ class Renderer:
     def __init__(self, env):
         self.env = env
         
-        WIDTH = GAME_SETTINGS.SIZE_X * DIMS.CELL_SIZE
-        HEIGHT = GAME_SETTINGS.SIZE_Y * DIMS.CELL_SIZE
+        WIDTH = env.size_x * DIMS.CELL_SIZE
+        HEIGHT = env.size_y * DIMS.CELL_SIZE
 
         pygame.init()
         self.window_surface = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
@@ -46,8 +46,7 @@ class Renderer:
         print(message)
 
     def get_screen_XY(self, coords):
-        return [ coords[0] * DIMS.CELL_SIZE, ( GAME_SETTINGS.SIZE_Y - coords[1] - 1 ) * DIMS.CELL_SIZE]
-    
+        return [ coords[0] * DIMS.CELL_SIZE, ( self.env.size_y - coords[1] - 1 ) * DIMS.CELL_SIZE]    
 
     def refresh_world(self):
         Y = self.env.size_y
