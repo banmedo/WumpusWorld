@@ -1,0 +1,12 @@
+INFO:root:shoot - [True, True, False, True, False, False, False, -11] 
+|    |    |    |    |
+|   P| W  |    |   P|
+|  G |    |    |    |
+|>   |   P|    |    |
+
+INFO:root:climb - [False, True, False, True, False, False, False, -12] 
+|    |    |    |    |
+|   P| W  |    |   P|
+|  G |    |    |    |
+|>   |   P|    |    |
+
