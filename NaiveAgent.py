@@ -8,8 +8,9 @@ from src.utils import rand_index, log_world
 ACTION_DEPTH = 10
 ACTIONS = ["forward","turn_left","turn_right","grab","shoot","climb"]
 
-
+# start playing the game
 def startGame(env):
+    log_world("start", env.check_environment(), env)
     for action in range(0, ACTION_DEPTH):
         action = ACTIONS[rand_index(len(ACTIONS))]
         state = env.perform(action)
@@ -18,6 +19,7 @@ def startGame(env):
             env.end_game()
             break
 
+# set up a new game
 def newGame():
     env = Environment(GAME_SETTINGS.SIZE_X, GAME_SETTINGS.SIZE_Y, GAME_SETTINGS.CLIMB_EMPTY, GAME_SETTINGS.PIT_PROB)
     # renderer = Renderer(env)

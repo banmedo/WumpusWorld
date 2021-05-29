@@ -1,3 +1,5 @@
+# THIS FILE CONTAIS A SET OF CONFIGS FOR THE GAME
+
 # Game parameters
 class GAME_SETTINGS:
     SIZE_X = 4

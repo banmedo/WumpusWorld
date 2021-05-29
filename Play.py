@@ -6,12 +6,12 @@ from src.utils import log
 from src.config import *
 from src.renderer import Renderer
 
-
+# end game
 def quit(env, renderer):
     env.end_game()
     renderer.show_end_message()
 
-
+# refresh the game
 def refresh(env, renderer, state):
     print(state)
     renderer.refresh_world()
@@ -21,8 +21,9 @@ def refresh(env, renderer, state):
     else:
         renderer.show_percept_messages(state)
 
-
+# start game
 def startGame(env, renderer):
+    # check initial state
     state = env.check_environment()
     refresh(env, renderer, state)
     while True:
@@ -49,10 +50,10 @@ def startGame(env, renderer):
                         action = "climb"
                     else:
                         continue
-                    
+                    # refresh the render after performing the action
                     refresh(env, renderer, env.perform(action))
 
-
+# set up a new game
 def newGame():
     env = Environment(GAME_SETTINGS.SIZE_X, GAME_SETTINGS.SIZE_Y, GAME_SETTINGS.CLIMB_EMPTY, GAME_SETTINGS.PIT_PROB)
     renderer = Renderer(env)

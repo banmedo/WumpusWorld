@@ -1,4 +1,6 @@
 class Percepts:
+    """This contains a set of percepts that the agent can perceive.
+    """
     stench = False
     breeze = False
     glitter = False

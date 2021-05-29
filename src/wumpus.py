@@ -1,4 +1,6 @@
 class Wumpus:
+    """This defines the wumpus.
+    """
     alive = True
     
     def __init__(self, location):
