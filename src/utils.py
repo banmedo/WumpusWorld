@@ -1,3 +1,4 @@
+# This file contains the utility/helper functions
 import logging
 import random
 
@@ -33,7 +34,10 @@ def log_world(action, state, env):
     has_gold = env.agent.has_gold()
     pits = env.pit_locs
 
-    world_map = f"{action} - {state} \n"
+    state_names = ["game_on","alive","stench","breeze","glitter","bump","screech"]
+    state_dict = dict(zip(state_names, state))
+
+    world_map = f"{action} - {state_dict} \n"
     for y in reversed(range(0, env.size_y)):
         row = "|"
         for x in range(0, env.size_x):

@@ -1,21 +1,21 @@
 import pygame
 
-from .utils import rand_index
 from .config import *
 
 class Renderer:
-
+    """This is the interactive renderer for the game.
+    """
     def __init__(self, env):
         self.env = env
         
-        WIDTH = GAME_SETTINGS.SIZE_X * DIMS.CELL_SIZE
-        HEIGHT = GAME_SETTINGS.SIZE_Y * DIMS.CELL_SIZE
+        WIDTH = env.size_x * DIMS.CELL_SIZE
+        HEIGHT = env.size_y * DIMS.CELL_SIZE
 
         pygame.init()
         self.window_surface = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
         self.window_surface.fill((255,255,255))
 
-
+    # show in game message
     def show_message(self, message):
         font = pygame.font.Font('freesansbold.ttf', 20)
         text = font.render(message, True, (0,0,0), (255,255,255))
@@ -24,12 +24,12 @@ class Renderer:
         self.window_surface.blit(text, text_rect)
         pygame.display.flip()
 
-
+    # show game end message
     def show_end_message(self):
         points = self.env.get_points()
         self.show_message(f"Game Over! your points = {points}")
 
-
+    # show percept messages
     def show_percept_messages(self, state):
         message = ""
         if (state[2]):
@@ -45,10 +45,11 @@ class Renderer:
         # self.show_message(message)
         print(message)
 
+    # get pixel coordinates from grid x, y
     def get_screen_XY(self, coords):
-        return [ coords[0] * DIMS.CELL_SIZE, ( GAME_SETTINGS.SIZE_Y - coords[1] - 1 ) * DIMS.CELL_SIZE]
-    
+        return [ coords[0] * DIMS.CELL_SIZE, ( self.env.size_y - coords[1] - 1 ) * DIMS.CELL_SIZE]    
 
+    # refresh the world render
     def refresh_world(self):
         Y = self.env.size_y
         X = self.env.size_x
