@@ -1,10 +1,10 @@
 from copy import copy
 
-from config import GAME_SETTINGS
-from utils import get_adjacent_cells, rand_prob, rand_cell_not_origin
+from src.world.config import GAME_SETTINGS
+from src.world.utils import get_adjacent_cells, rand_prob, rand_cell_not_origin
 
-from agent import Agent
-from percepts import Percepts
+from src.world.agent_state import AgentState
+from src.world.percepts import Percepts
 
 class Environment:
     # initialize the environment
@@ -13,7 +13,7 @@ class Environment:
                  Y = GAME_SETTINGS.SIZE_Y,
                  pit_prob = GAME_SETTINGS.PIT_PROB,
                  climb_empty = GAME_SETTINGS.CLIMB_EMPTY,
-                 agent = Agent(),
+                 agent = AgentState(),
                  terminated = False,
                  wumpus_alive = True,
                  pit_locations = None,
@@ -87,15 +87,15 @@ class Environment:
         return coords == self.gold_location
     
     # helper function to check if wumpus is in shooting range
-    def wumpus_in_range(a, w, d):
+    def wumpus_in_range(self, a, w, d):
         if (d == "N"):
             return (w[0] == a[0] and w[1] > a[1])
         elif (d == "E"):
-            return (w[0] < a[0] and w[1] == a[1])
+            return (w[0] > a[0] and w[1] == a[1])
         elif (d == "S"):
             return (w[0] == a[0] and w[1] < a[1])
         elif (d == "W"):
-            return (w[0] > a[0] and w[1] == a[1])
+            return (w[0] < a[0] and w[1] == a[1])
         else:
             return False
 
@@ -103,7 +103,7 @@ class Environment:
     def kill_successful(self):
         return self.agent.has_arrows() and \
             self.wumpus_alive and \
-            wumpus_in_range(
+            self.wumpus_in_range(
                 self.agent.location,
                 self.wumpus_location,
                 self.agent.get_direction()
@@ -124,7 +124,6 @@ class Environment:
 
     # check if there is breeze
     def is_breeze(self):
-        print(self.pit_locations)
         return self.is_pit_adjacent(self.agent.location)
     
     # check if there is stench
@@ -152,7 +151,7 @@ class Environment:
             if action == "forward":
                 moved_agent = self.agent.move_forward(self.X, self.Y)
                 death = (self.is_wumpus_at(moved_agent.location) and self.wumpus_alive) or self.is_pit_at(moved_agent.location)
-                new_agent = moved_agent._Agent__copy(is_alive=not death)
+                new_agent = moved_agent._AgentState__copy(is_alive=not death)
                 if self.agent.has_gold:
                     gold_location = new_agent.location
                 else:
@@ -174,7 +173,7 @@ class Environment:
                 return new_env, self.get_percepts()
             
             elif action == "grab":
-                new_agent = self.agent.__copy(has_gold=self.is_glitter())
+                new_agent = self.agent._AgentState__copy(has_gold=self.is_glitter())
                 new_env = self.__copy(agent=new_agent)
                 return new_env, self.get_percepts()
 
@@ -212,7 +211,7 @@ class Environment:
         has_gold = self.agent.has_gold
         pits = self.pit_locations
 
-        world_map = ""
+        world_map = "\n"
         for y in reversed(range(0, self.Y)):
             row = "|"
             for x in range(0, self.X):
