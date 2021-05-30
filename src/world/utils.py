@@ -3,7 +3,7 @@ import logging
 import random
 
 from numpy import sqrt, square
-LOG_FILE = "log.log"
+LOG_FILE = "../../log.log"
 
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, filemode="w")
 
