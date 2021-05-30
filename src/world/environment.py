@@ -132,7 +132,11 @@ class Environment:
         return self.is_wumpus_adjacent(self.agent.location)
 
     # get current percepts
-    def get_percepts(self):
+    def get_percepts(self, skip_reward=False):
+        if skip_reward:
+            reward = 0
+        else:
+            reward = -1
         return Percepts(
             stench = self.is_stench(),
             breeze = self.is_breeze(),
@@ -200,4 +204,31 @@ class Environment:
                 return new_env, percepts
 
 
-e = Environment()
+    def __str__(self):
+        agent = self.agent.location
+        facing = self.agent.facing
+        wumpus = self.wumpus_location
+        gold = self.gold_location
+        has_gold = self.agent.has_gold
+        pits = self.pit_locations
+
+        world_map = ""
+        for y in reversed(range(0, self.Y)):
+            row = "|"
+            for x in range(0, self.X):
+                loc = [x, y]
+                a1 = a2 = a3 = a4 = " "
+                if (agent == loc):
+                    a1 = ["^", ">", "v", "<"][facing]
+                if (wumpus == loc):
+                    if (self.wumpus_alive):
+                        a2 = "W"
+                    else:
+                        a2 = "X"
+                if ((has_gold and agent == loc) or (not has_gold and gold == loc)):
+                    a3 = "G"
+                if (loc in pits):
+                    a4 = "P"
+                row = f"{row}{a1}{a2}{a3}{a4}|"
+            world_map = world_map+row +"\n"
+        return world_map
