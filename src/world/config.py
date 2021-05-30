@@ -1,5 +1,9 @@
 # THIS FILE CONTAIS A SET OF CONFIGS FOR THE GAME
 
+# CONSTANTS
+MOVEMOD = {"N":(0, 1), "E":(1, 0), "S":(0, -1), "W":(-1, 0)}
+
+# CLASSES
 # Game parameters
 class GAME_SETTINGS:
     SIZE_X = 4
