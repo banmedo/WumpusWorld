@@ -48,23 +48,6 @@ class Environment:
             self.wumpus_location = wumpus_location
         else:
             self.wumpus_location = rand_cell_not_origin(X, Y)
-    
-    # copy the environment with specified changes
-    def __copy(self,
-               agent = None,
-               terminated = None,
-               wumpus_alive = None,
-               gold_location = None):
-        new_env = copy(self)
-        if (agent is not None):
-            new_env.agent = agent
-        if (terminated is not None):
-            new_env.terminated = terminated
-        if (wumpus_alive is not None):
-            new_env.wumpus_alive = wumpus_alive
-        if (gold_location is not None):
-            new_env.gold_location = gold_location
-        return new_env
 
     # check if pit is at given coords
     def is_pit_at(self, coords):
@@ -146,61 +129,60 @@ class Environment:
     # act
     def act(self, action):
         if self.terminated:
-            return self, Percept(is_terminated = True)
+            return Percept(is_terminated = True)
         else:
             if action == "forward":
-                moved_agent = self.agent.move_forward(self.X, self.Y)
-                death = (self.is_wumpus_at(moved_agent.location) and self.wumpus_alive) or self.is_pit_at(moved_agent.location)
-                new_agent = moved_agent._AgentState__copy(is_alive=not death)
+                old_loc = self.agent.location
+                self.agent.move_forward(self.X, self.Y)
+                death = (self.is_wumpus_at(self.agent.location) and self.wumpus_alive) or self.is_pit_at(self.agent.location)
+                self.agent.is_alive = not death
                 if self.agent.has_gold:
-                    gold_location = new_agent.location
+                    gold_location = self.agent.location
                 else:
                     gold_location = self.gold_location
-                new_env = self.__copy(agent=new_agent, terminated=death, gold_location=gold_location)
+                self.gold_location = gold_location
+                self.terminated = death
                 percepts = self.get_percepts()
-                percepts.bump = new_agent.location == self.agent.location
-                percepts.is_terminated = not new_agent.is_alive
-                if not new_agent.is_alive:
+                percepts.bump = self.agent.location == old_loc
+                percepts.is_terminated = not self.agent.is_alive
+                if not self.agent.is_alive:
                     percepts.reward = -1001
-                return new_env, percepts
+                return percepts
 
             elif action == "turn_left":
-                new_env = self.__copy(agent=self.agent.turn_left())
-                return new_env, self.get_percepts()
+                self.agent.turn_left()
+                return self.get_percepts()
             
             elif action == "turn_right":
-                new_env = self.__copy(agent=self.agent.turn_right())
-                return new_env, self.get_percepts()
+                self.agent.turn_right()
+                return self.get_percepts()
             
             elif action == "grab":
-                new_agent = self.agent._AgentState__copy(has_gold=self.is_glitter())
-                new_env = self.__copy(agent=new_agent)
-                return new_env, self.get_percepts()
+                self.agent.has_gold = self.is_glitter()
+                return self.get_percepts()
 
             elif action == "climb":
                 in_start = self.agent.location == [0,0]
                 success = self.agent.has_gold and in_start
                 is_terminated = success or (self.climb_empty and in_start)
-                new_env = self.__copy()
                 percepts = self.get_percepts()
                 percepts.is_terminated = is_terminated
                 if success:
                     percepts.reward = 999
                 else:
                     percepts.reward = -1
-                return new_env, percepts
+                return percepts
             
             elif action == "shoot":
                 had_arrows = self.agent.has_arrows()
                 wumpus_killed = self.kill_successful()
-                new_env = self.__copy(
-                                    agent=self.agent.use_arrow(),
-                                    wumpus_alive=self.wumpus_alive and not wumpus_killed)
+                self.agent.use_arrow()
+                self.wumpus_alive = self.wumpus_alive and not wumpus_killed
                 percepts = self.get_percepts()
                 percepts.screech = wumpus_killed
                 if (had_arrows):
                     percepts.reward = -11
-                return new_env, percepts
+                return percepts
 
 
     def __str__(self):
