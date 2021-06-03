@@ -9,4 +9,4 @@ class NaiveAgent(Agent):
     ACTIONS = ["forward","turn_left","turn_right","grab","shoot","climb"]
 
     def next_action(self, _):
-        return self, self.ACTIONS[rand_index(len(self.ACTIONS))]
+        return self.ACTIONS[rand_index(len(self.ACTIONS))]
