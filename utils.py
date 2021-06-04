@@ -3,7 +3,7 @@ LOG_FILE = "log.log"
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, filemode="w")
 
 def log(message, level=logging.INFO):
-    print(message)
+    # print(message)
     if level == logging.INFO:
         logging.info(message)
     else:
