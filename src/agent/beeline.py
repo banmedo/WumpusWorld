@@ -1,13 +1,11 @@
 import sys
 sys.path.insert(0, "../..")
 
-from copy import copy
 import networkx as nx
 
 from src.world.agent import Agent
 from src.world.agent_state import AgentState
 from src.world.config import GAME_SETTINGS
-from src.world.environment import Environment
 from src.world.utils import rand_index, get_adjacent_cells
 
 class BeelineAgent(Agent):
