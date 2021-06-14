@@ -129,7 +129,7 @@ class Environment:
     # act
     def act(self, action):
         if self.terminated:
-            return Percept(is_terminated = True)
+            return Percepts(is_terminated = True)
         else:
             if action == "forward":
                 old_loc = self.agent.location
