@@ -8,6 +8,8 @@ from src.world.agent_state import AgentState
 from src.world.config import GAME_SETTINGS
 from src.world.utils import rand_index, get_adjacent_cells
 
+from pomegranate import DiscreteDistribution
+
 class ProbAgent(Agent):
     ACTIONS = ["forward","turn_left","turn_right","shoot"]
     # ACTIONS = ["forward","turn_left","turn_right","grab","shoot","climb"]
@@ -42,6 +44,15 @@ class ProbAgent(Agent):
 
         self.pit_probs = [[self.pit_prob for x in range(self.X)] for y in range(self.Y)]
         self.pit_probs[self.entrance[0]][self.entrance[1]] = 0.0
+
+        # wumpus_prob = 1.0 / (self.X * self.Y - 1)
+        # wld = {}
+        # for x in range(0,self.X):
+        #     for y in range(0,self.Y):
+        #         wld[self.coord_to_node([x,y])] = wumpus_prob
+        # print(wld)
+        # # self.wumpus_loc_dist = 
+        print(self.pit_probs)
 
         
     # convert coordinates to node name

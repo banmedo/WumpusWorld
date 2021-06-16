@@ -23,5 +23,11 @@ def clamp(x, low, high):
 def get_adjacent_cells(coords):
     return list(map(lambda x: [coords[0]+x[0], coords[1]+x[1]], [[0,1],[1,0],[0,-1],[-1,0]]))
 
+# Given a cell coordinates and a grid array return what is in the grid array at those coords
+def get_neighbors(coords, array):
+    adjacent_cells = get_adjacent_cells(coords)
+    return list(map(lambda x, y: array[x][y], adjacent_cells))
+
+
 def calc_distance(point_a, point_b):
     return sqrt(square(point_b[0] - point_a[0]) + square(point_b[1] - point_a[1]))
