@@ -11,7 +11,7 @@ from utils import log
 from src.agent.dql import DQLAgent
 from src.world.environment import Environment
 
-nodes = [ 72, 512, 128, 128, 128, 6]
+nodes = [ 72, 512, 128, 128, 6]
 
 layers = [torch.nn.Linear(nodes[0], nodes[1])]
 
@@ -28,10 +28,10 @@ model2.load_state_dict(model.state_dict())
 LEARNING_RATE = 1e-3
 GAMMA = 0.9
 EPSILON = 0.3
-EPOCHS = 5000
-MEM_SIZE = 1000
-BATCH_SIZE = 200
-ACTION_DEPTH = 500
+EPOCHS = 3000
+MEM_SIZE = 1500
+BATCH_SIZE = 100
+ACTION_DEPTH = 50
 SYNC_FREQ = 500
 
 loss_fn = torch.nn.MSELoss()
@@ -40,7 +40,6 @@ replay = deque(maxlen=MEM_SIZE)
 losses = []
 
 sync_step = 0
-
 
 # start an epoch
 for i in range(EPOCHS):
@@ -51,7 +50,7 @@ for i in range(EPOCHS):
     # get the state of the agent to feed into network
     state = agent.get_agent_state() 
     # mutate the state randomly
-    state_w_rand = state + (np.random.rand(*state.shape) / 100.0)
+    state_w_rand = state + (np.random.rand(1, 72) / 100.0)
     # convert the mutated state to a tensor
     state_tensor = torch.from_numpy(state_w_rand).float()
     # counter for the number of actions that can be taken
@@ -76,11 +75,13 @@ for i in range(EPOCHS):
         action = agent.ACTIONS[action_ind]
         # act on the env and get percepts from env
         percepts = env.act(action)
+        log(percepts)
+        log(env)
         # the agent performs the action so update the agent object
         # and returns the new state
         new_state = agent.act(action, percepts)
         # mutation and conversion to tensor
-        new_state_w_rand = new_state + (np.random.rand(*state.shape) / 100.0)
+        new_state_w_rand = new_state + (np.random.rand(1, 72) / 100.0)
         new_state_tensor = torch.from_numpy(new_state_w_rand).float()
         # add action reward to game reward
         game_reward = game_reward + percepts.reward
@@ -146,4 +147,4 @@ plt.xlabel("Epochs", fontsize=22)
 plt.ylabel("Loss", fontsize=22)
 plt.savefig(f"graphs/loss_{file_suffix}.png")
 
-# torch.save(model.state_dict(), f"dqlmodel/wumpus_{file_suffix}")
+torch.save(model.state_dict(), f"dqlmodel/wumpus_{file_suffix}")

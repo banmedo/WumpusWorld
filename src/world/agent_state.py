@@ -10,12 +10,15 @@ class AgentState:
     # The names mapping array of facing to directions
     __DIRECTIONS = ["N", "E", "S", "W"]
     
-    # starting parameters for a new agent
-    rem_arrows = 1
-    has_gold = False
-    is_alive = True
-    location = [0,0]
-    facing = 1
+    def __init__(self):# starting parameters for a new agent
+        self.rem_arrows = 1
+        self.has_gold = False
+        self.is_alive = True
+        self.location = [0,0]
+        self.facing = 1
+
+    def get_location(self):
+        return self.location
 
     # get agent direction
     def get_direction(self):

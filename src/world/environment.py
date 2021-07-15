@@ -13,7 +13,6 @@ class Environment:
                  Y = GAME_SETTINGS.SIZE_Y,
                  pit_prob = GAME_SETTINGS.PIT_PROB,
                  climb_empty = GAME_SETTINGS.CLIMB_EMPTY,
-                 agent = AgentState(),
                  terminated = False,
                  wumpus_alive = True,
                  pit_locations = None,
@@ -23,7 +22,7 @@ class Environment:
         self.Y = Y
         self.pit_prob = pit_prob
         self.climb_empty = climb_empty
-        self.agent = agent
+        self.agent = AgentState()
         self.terminated = terminated
         self.wumpus_alive = wumpus_alive
         

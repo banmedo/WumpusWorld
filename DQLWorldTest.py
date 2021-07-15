@@ -3,6 +3,7 @@ import numpy as np
 
 from src.agent.dql import DQLAgent
 from src.world.environment import Environment
+from src.world.agent_state import AgentState
 
 from utils import log
 
@@ -58,8 +59,9 @@ if __name__ == "__main__":
     # load weights from the file
     model.load_state_dict(torch.load(f"dqlmodel/{model_name}"))
 
-    TEST_NUMB = 1000
+    TEST_NUMB = 10
     won = 0
+    total_score = 0
     for i in range(TEST_NUMB):
         # start a new environment
         env = Environment(4, 4, 0.2, True)
@@ -68,5 +70,7 @@ if __name__ == "__main__":
         result = test_model(model, env, agent)
         if result['won']:
             won = won + 1
+        total_score = total_score + result['score']
     print(f"Won {won} games!")
     print("Win ratio is {}".format(won/TEST_NUMB))
+    print("Average score is {}".format(total_score/TEST_NUMB))
